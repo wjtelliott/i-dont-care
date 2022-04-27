@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function SearchBar() {
+export default function SearchBar(props) {
 
     const _DEFAULT_TEXT = 'What\'re you hungry for?...'
 
@@ -20,11 +20,15 @@ export default function SearchBar() {
         border: '1px solid white'
     }
 
+    const [input, setInput] = useState('');
+
+    const handleSearch = () => props.handleClick(input);
+
     return (
 
-        <div class="input-group mb-3 m-auto w-50 my-4">
-            <input type="text" style={searchInputStyles} class="form-control" placeholder={_DEFAULT_TEXT} aria-label="Search Bar" aria-describedby="search-button" />
-            <button style={searchBtnStyles} class="btn" type="button" id="search-button">Search</button>
+        <div id='home-search' className="input-group mb-3 m-auto w-50 my-4">
+            <input type="text" style={searchInputStyles} className="form-control" placeholder={_DEFAULT_TEXT} aria-label="Search Bar" aria-describedby="search-button" onChange={e => setInput(e.target.value)} />
+            <button style={searchBtnStyles} className="btn" type="button" id="search-button" onClick={handleSearch} >Search</button>
         </div>
 
     );

@@ -1,17 +1,30 @@
 import './App.css';
-import Header from './Components/Home/Header';
-import SearchBar from './Components/Home/SearchBar';
+import Home from './Components/Home/Home';
+import Map from './Components/Map/Map'
+// import {
+//     MapContainer,
+//     TileLayer,
+//     useMap,
+//     Marker,
+//     Popup
+//   } from 'https://cdn.esm.sh/react-leaflet'
+
+import {
+    Link,
+    BrowserRouter,
+    Route,
+    Routes
+} from 'react-router-dom';
 
 function App() {
     return (
         <div className="App">
-            <Header />
-
-            <SearchBar />
-
-            <p>
-                MAIN
-            </p>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/map' element={<Map />} />
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
