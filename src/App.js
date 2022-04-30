@@ -36,8 +36,23 @@ function App() {
     };
 
     const getGeo = async () => {
-        const pos = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject));
-        setUserGeo({lat: pos.coords.latitude, lng: pos.coords.longitude});
+        const pos = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
+            .then(poss => setUserGeo({lat: poss.coords.latitude, lng: poss.coords.longitude}))
+            .catch(async err => {
+                if (true) {
+                    // GeoBlocked get API call
+                    //http://ip-api.com/json/24.241.224.107
+
+                    const getIPResponse = await fetch('https://geolocation-db.com/json/');
+                    const getIPData = await getIPResponse.json();
+
+
+                    const response = await fetch(`http://ip-api.com/json/${getIPData.IPv4}`);
+                    const resData = await response.json();
+
+                    setUserGeo({lat: resData.lat, lng: resData.lon});
+                }
+            });
     }
 
     useEffect(() => {
