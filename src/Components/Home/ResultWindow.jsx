@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 export default function ResultsWindow(props) {
 
-    const _TITLE = 'Your Results...'
+    const _TITLE = 'A few of your results...'
 
     const fakeResultData = ['Loading....']
 
@@ -26,7 +26,7 @@ export default function ResultsWindow(props) {
                     data.map((el, index) => {
                         return (
                             <div key={`check${index}`} className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id={`customCheck${index}`} />
+                                {/* <input type="checkbox" className="custom-control-input" id={`customCheck${index}`} /> */}
                                 <label className="custom-control-label mx-2" htmlFor={`customCheck${index}`}>{el.name? el.name : el}</label>
                             </div>
                         )

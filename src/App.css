@@ -65,13 +65,23 @@ label {
         width: 100%!important;
         margin-top: 2em;
     }
+    div.card-title {
+        padding: 0!important;
+    }
+    .card-title p.text-primary {
+        width: 30%!important;
+    }
+    .card-title p.text-danger {
+        width: 70%!important;
+    }
 }
 
-#map {
-    height: 180px;
+.card {
+    margin-bottom: 3em;
 }
 
 #page-footer {
+    margin-top: 3em;
     position: fixed;
     bottom: 0;
     left: 0;
