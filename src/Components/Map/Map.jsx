@@ -22,7 +22,8 @@ export default function Map (props) {
     let { lat, lng } = useContext(UserLocation);
     const [excludedPlaces, setExcludedPlaces] = useState([]);
 
-    if (rawData.results?.length < 1) return (<NoData />)
+    if (rawData.results.results?.length < 1 ||
+        rawData.results?.results == null) return (<NoData />)
 
     const data = rawData.results.results.sort(()=> Math.random() -.5);
 
@@ -44,9 +45,10 @@ export default function Map (props) {
     lng = lng ?? defaultMap.defaultProps.lng;
 
     let randomPlace = getRandomPlace();
-    let placeLat = randomPlace.geocodes.main.latitude;
-    let placeLng = randomPlace.geocodes.main.longitude;
+    let placeLat = randomPlace.geocodes?.main?.latitude;
+    let placeLng = randomPlace.geocodes?.main?.longitude;
 
+    if (!placeLat || !placeLng) return (<NoData/>)
 
     
 

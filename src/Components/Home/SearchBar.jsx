@@ -22,7 +22,10 @@ export default function SearchBar(props) {
 
     const [input, setInput] = useState('');
 
-    const handleSearch = () => props.handleClick(input);
+    const handleSearch = () => {
+        props.handleClick(input);
+        setInput('');
+    }
 
     return (
 

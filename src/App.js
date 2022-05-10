@@ -19,7 +19,12 @@ function App() {
 
     const handleFetch = term => {
 
-        if (!term) return;
+        if (!term) {
+            setData({
+                results: []
+            });
+            return;
+        };
         const fetchData = async () => {
             const options = {
                 method: 'GET',

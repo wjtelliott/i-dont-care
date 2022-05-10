@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 export default function ResultsWindow(props) {
+
+    const [noResults, setNoResults] = useState(true);
 
     const _TITLE = 'A few of your results...'
 
@@ -17,7 +19,16 @@ export default function ResultsWindow(props) {
 
     const displayResults = () => {
 
-        const data = props.results?.results?.length > 0 ? props.results.results : fakeResultData;
+        
+
+        let data = props.results?.results?.length > 0 ? props.results.results : fakeResultData;
+
+        if (props.results.results?.length <= 0) {
+            data = ['No Results found! Try Searching again. :(']
+            if (!noResults) setNoResults(true);
+        } else {
+            if (noResults) setNoResults(false);
+        }
 
         return (
 
@@ -47,7 +58,10 @@ export default function ResultsWindow(props) {
                         {displayResults()}
                     </div>
                     <div className='w-25 d-flex flex-nowrap justify-content-center' id='button-wrap'>
-                        <Link className="w-100 align-self-center" to='/map'><button style={searchBtnStyles} type="button" id="search-button" >Roll the dice!</button></Link>
+                        {
+                            !noResults &&
+                            <Link className="w-100 align-self-center" to='/map'><button style={searchBtnStyles} type="button" id="search-button" >Roll the dice!</button></Link>
+                        }
                     </div>
                 </div>
             </div>
