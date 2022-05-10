@@ -1,6 +1,7 @@
 import './App.css';
 import Home from './Components/Home/Home';
 import Map from './Components/Map/Map'
+import env from 'react-dotenv';
 import {
     Link,
     BrowserRouter,
@@ -30,7 +31,7 @@ function App() {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
-                    Authorization: 'fsq3/tZJGGWJ7maPrJHgTHQXrc26Tncd4EBRuh04w/eHFS8='
+                    Authorization: env.FOURSQR_AUTH
                 }
             }
             const response = await fetch(`https://api.foursquare.com/v3/places/search?query=${term}&ll=${userGeo.lat}%2C${userGeo.lng}&radius=5000`, options);
