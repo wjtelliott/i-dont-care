@@ -31,7 +31,7 @@ function App() {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
-                    Authorization: env.FOURSQR_AUTH
+                    Authorization: 'fsq3/tZJGGWJ7maPrJHgTHQXrc26Tncd4EBRuh04w/eHFS8='
                 }
             }
             const response = await fetch(`https://api.foursquare.com/v3/places/search?query=${term}&ll=${userGeo.lat}%2C${userGeo.lng}&radius=5000`, options);
