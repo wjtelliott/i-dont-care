@@ -22,7 +22,7 @@ export default function ConfirmProfile({handleCancel}) {
         <div>
             <div id='overlay' style={overlayStyles}></div>
             <dialog id='window' className='rounded' style={windowStyles}>
-                <form className='m-auto text-center font-size-3 justify-content-evenly' method='POST' action={``}>
+                <form className='m-auto text-center font-size-3 justify-content-evenly' method='POST'>
                     <div className="form-row">
                         <div className="form-group col-md-8 m-auto">
                             <label for="inputName">Name</label>

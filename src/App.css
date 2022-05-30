@@ -11,6 +11,7 @@
 
 body {
     background: var(--background-color-primary);
+    margin-bottom: 200px;
 }
 
 #home-search input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -59,6 +60,15 @@ label {
     width: 100%;
 }
 
+.pop-search-btn {
+    background-color: transparent !important;
+    color: white;
+}
+
+.pop-search-btn :hover {
+    background-color: transparent !important;
+}
+
 /* Mobile Styling */
 @media only screen and (max-width: 600px) {
     #home-search {
@@ -92,7 +102,7 @@ label {
         margin: 0 auto !important;
     }
     #popular-search-window {
-        justify-content: space-between !important;
+        justify-content: center !important;
         padding: .75em !important;
     }
     #popular-search-window button {

@@ -33,6 +33,7 @@ export default function Header({handleConfirmClick}) {
                         }
                         {
                             user &&
+                            handleConfirmClick &&
                             <li><button className='dropdown-item' onClick={handleConfirmClick}>Preferences</button></li>
                         }
                     </ul>

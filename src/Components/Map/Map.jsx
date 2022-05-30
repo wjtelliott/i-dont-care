@@ -6,6 +6,7 @@ import { Map as PigeonMap, Marker, ZoomControl } from 'pigeon-maps';
 import { StoreLocations } from '../../Context/StoreLocations';
 import { UserLocation } from '../../Context/UserLocation';
 import NoData from './NoData';
+import PlaceDetails from './PlaceDetails';
 
 class defaultMap {
     static defaultProps = {
@@ -18,12 +19,18 @@ class defaultMap {
 }
 
 export default function Map (props) {
+
     const { results: searchResults, excludes: searchExclusions } = useContext(StoreLocations);
     let { lat, lng } = useContext(UserLocation);
     const [ excludedPlaces, setExcludedPlaces ] = useState([]);
 
+    console.log('results', searchResults)
+    console.log('excludes', searchExclusions)
+
+
     if (searchResults.results?.length < 1 ||
-        searchResults?.results == null) return (<NoData />)
+        searchResults?.results == null ||
+        (searchResults.results?.length === searchExclusions.length)) return (<NoData />)
 
     const data = searchResults.results
         .sort(()=> Math.random() -.5)
@@ -75,6 +82,7 @@ export default function Map (props) {
                 <p className='text-center btn btn-primary my-2' onClick={getNewPlace}>Next & Exclude This</p>
                 <p className='card-footer text-center'><Link to='/'>Go Back To  Home</Link></p>
             </div>
+            <PlaceDetails details={randomPlace} />
             <Footer />
         </div>
     )

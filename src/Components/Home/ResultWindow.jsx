@@ -25,7 +25,7 @@ export default function ResultsWindow(props) {
         let data = props.results?.results?.length > 0 ? props.results.results : ['Loading...'];
 
         if (props.results.results?.length <= 0) {
-            data = ['No Results found! Try Searching again. :(']
+            data = ['No Results found :( ! There may not be any in your area for this. Try searching something new. I\'ll try to find everything within 5000meters of you.']
             if (!noResults) setNoResults(true);
         } else {
             if (noResults) setNoResults(false);
