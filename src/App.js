@@ -1,25 +1,24 @@
 import './App.css';
 import Home from './Components/Home/Home';
 import Map from './Components/Map/Map'
-import env from 'react-dotenv';
 import {
-    Link,
     BrowserRouter,
     Route,
     Routes
 } from 'react-router-dom';
 import { StoreLocations } from './Context/StoreLocations';
 import { UserLocation } from './Context/UserLocation';
-import { useEffect, useState } from 'react';
+import { ApiUrls } from './Context/ApiUrls';
+import { useContext, useEffect, useState } from 'react';
 
 function App() {
 
-    const [data, setData] = useState([]);
-    const [exclusions, setExclusions] = useState([]);
-    const [userGeo, setUserGeo] = useState({});
+    const [ data, setData ] = useState([]);
+    const [ exclusions, setExclusions ] = useState([]);
+    const [ userGeo, setUserGeo ] = useState({});
+    const apiData = useContext(ApiUrls);
 
     const handleFetch = term => {
-
         if (!term) {
             setData({
                 results: []
@@ -31,56 +30,59 @@ function App() {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
-                    Authorization: 'fsq3/tZJGGWJ7maPrJHgTHQXrc26Tncd4EBRuh04w/eHFS8='
+                    Authorization: apiData.SearchAuth
                 }
             }
-            const response = await fetch(`https://api.foursquare.com/v3/places/search?query=${term}&ll=${userGeo.lat}%2C${userGeo.lng}&radius=5000`, options);
+            const lookupUrl =
+                apiData.SearchUrl
+                    .replace('{1}', term)
+                    .replace('{2}', userGeo.lat)
+                    .replace('{3}', userGeo.lng);
+            const response = await fetch(lookupUrl, options);
             const resData = await response.json();
             setData(resData);
         }
         fetchData();
     };
 
-    const getGeo = async () => {
-        const pos = await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
-            .then(poss => setUserGeo({lat: poss.coords.latitude, lng: poss.coords.longitude}))
-            .catch(async err => {
-                if (true) {
-                    // GeoBlocked get API call
-                    //http://ip-api.com/json/24.241.224.107
-
-                    const getIPResponse = await fetch('https://geolocation-db.com/json/');
-                    const getIPData = await getIPResponse.json();
-
-
-                    const response = await fetch(`http://ip-api.com/json/${getIPData.IPv4}`);
-                    const resData = await response.json();
-
-                    setUserGeo({lat: resData.lat, lng: resData.lon});
-                }
-            });
-    }
-
     useEffect(() => {
-        getGeo();
+        const getUserGeo = async () => {
+            await new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject))
+                .then(poss => setUserGeo({lat: poss.coords.latitude, lng: poss.coords.longitude}))
+                .catch(async err => {
+    
+                    // This *should* just be an error saying that they don't want to give us their geoloc
+                    console.log(err);
+    
+                    const getIPResponse = await fetch(apiData.IpLookupUrl);
+                    const getIPData = await getIPResponse.json();
+    
+                    const response = await fetch(`${apiData.GeoIpUrl}${getIPData.IPv4}`);
+                    const resData = await response.json();
+    
+                    setUserGeo({lat: resData.lat, lng: resData.lon});
+                });
+        }
+        getUserGeo();
     }, [])
 
     return (
         <div className="App">
             <StoreLocations.Provider value={{
                 results: data,
-                excludes: exclusions
+                excludes: exclusions,
+                setExcludes: setExclusions
             }}>
                 <UserLocation.Provider value={{
                     lat: userGeo.lat,
                     lng: userGeo.lng,
-                    getGeo: getGeo,
                     handleFetch: handleFetch
                 }}>
                     <BrowserRouter>
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route path='/map' element={<Map />} />
+                            <Route path='*' element={<Home />} />
                         </Routes>
                     </BrowserRouter>
                 </UserLocation.Provider>

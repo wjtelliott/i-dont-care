@@ -6,6 +6,7 @@ import { Map as PigeonMap, Marker, ZoomControl } from 'pigeon-maps';
 import { StoreLocations } from '../../Context/StoreLocations';
 import { UserLocation } from '../../Context/UserLocation';
 import NoData from './NoData';
+import PlaceDetails from './PlaceDetails';
 
 class defaultMap {
     static defaultProps = {
@@ -18,14 +19,22 @@ class defaultMap {
 }
 
 export default function Map (props) {
-    const rawData = useContext(StoreLocations);
+
+    const { results: searchResults, excludes: searchExclusions } = useContext(StoreLocations);
     let { lat, lng } = useContext(UserLocation);
-    const [excludedPlaces, setExcludedPlaces] = useState([]);
+    const [ excludedPlaces, setExcludedPlaces ] = useState([]);
 
-    if (rawData.results.results?.length < 1 ||
-        rawData.results?.results == null) return (<NoData />)
+    console.log('results', searchResults)
+    console.log('excludes', searchExclusions)
 
-    const data = rawData.results.results.sort(()=> Math.random() -.5);
+
+    if (searchResults.results?.length < 1 ||
+        searchResults?.results == null ||
+        (searchResults.results?.length === searchExclusions.length)) return (<NoData />)
+
+    const data = searchResults.results
+        .sort(()=> Math.random() -.5)
+        .filter(el => !searchExclusions.includes(el.name));
 
     const getRandomPlace = () => {
         for (let i = 0; i < data.length; i++)
@@ -48,6 +57,7 @@ export default function Map (props) {
     let placeLat = randomPlace.geocodes?.main?.latitude;
     let placeLng = randomPlace.geocodes?.main?.longitude;
 
+    // Double check lat&lng again before displaying
     if (!placeLat || !placeLng) return (<NoData/>)
 
     
@@ -72,6 +82,7 @@ export default function Map (props) {
                 <p className='text-center btn btn-primary my-2' onClick={getNewPlace}>Next & Exclude This</p>
                 <p className='card-footer text-center'><Link to='/'>Go Back To  Home</Link></p>
             </div>
+            <PlaceDetails details={randomPlace} />
             <Footer />
         </div>
     )
