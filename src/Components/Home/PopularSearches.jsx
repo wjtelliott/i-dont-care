@@ -36,7 +36,7 @@ export default function PopularSearches(props) {
     const randomPopularSearches = () => {
         // don't want the same one twice
         let searches = [];
-        for (let i = 0; i <= 10; i++) {
+        for (let i = 0; i <= 14; i++) {
             let randomNumber = Math.floor(Math.random() * _RANDOM_SEARCHES.length);
             if (searches.indexOf(randomNumber) !== -1) {
                 i--;
@@ -45,21 +45,32 @@ export default function PopularSearches(props) {
             searches.push(randomNumber);
         }
 
-        return  _RANDOM_SEARCHES
-                    .filter((el, index) => searches.indexOf(index) !== -1)
+        const buttonStyles = {
+            fontSize: '1.4em',
+        }
+
+        return _RANDOM_SEARCHES
+                    .filter((_, index) => searches.indexOf(index) !== -1)
                     .map( (el, index) => {
                         return (
-                            <p key={`fake${index}`} className='card-content'>{el}</p>
+                            <button
+                                onClick={()=>props.handleLink(el)}
+                                key={`popSearch${index}`}
+                                className='px-3 my-2 mx-4 d-block btn btn-outline-primary card-content'
+                                style={buttonStyles}
+                            >
+                                {el}
+                            </button>
                         )
-                });
+                    });
     }
 
     return (
-        <div className='card m-auto p-4 my-5 w-75'>
+        <div className='card m-auto my-5 w-75'>
             <div className='card-header'>
                 <p className='card-title display-6'>{_TITLE}</p>
             </div>
-            <div className='card-body'>
+            <div id='popular-search-window' className='card-body p-5 d-flex justify-content-between flex-wrap'>
                 {randomPopularSearches()}
             </div>
         </div>

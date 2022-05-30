@@ -7,10 +7,12 @@ import Header from './Header';
 import Footer from "./Footer";
 import { StoreLocations } from "../../Context/StoreLocations";
 import { UserLocation } from "../../Context/UserLocation";
+import ConfirmProfile from "./ConfirmProfile";
 
 export default function Home(props) {
 
-    const [showResults, setShowResults] = useState(false);
+    const [ showResults, setShowResults ] = useState(false);
+    const [ showConfirmProfile, setShowConfirmProfile ] = useState(false);
 
     const searchData = useContext(StoreLocations).results;
     const { handleFetch } = useContext(UserLocation);
@@ -20,14 +22,24 @@ export default function Home(props) {
         setShowResults(true);
     }
 
+    const handleConfirmClick = () => {
+        setShowConfirmProfile(!showConfirmProfile);
+    }
+
     return (
         <main>
-            <Header />
+            <Header handleConfirmClick={handleConfirmClick} />
             <SearchBar handleClick={handleClick} />
-            <FlexibleButton />
+            
+            <FlexibleButton handleFlex={handleClick} />
             {
-                !showResults ? <PopularSearches /> : <ResultsWindow results={searchData} />
+                !showResults ? <PopularSearches handleLink={handleClick} /> : <ResultsWindow results={searchData} />
             }
+
+            {
+                showConfirmProfile && <ConfirmProfile handleCancel={handleConfirmClick} />
+            }
+
             <Footer />
         </main>
     )
