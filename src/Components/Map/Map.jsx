@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom'
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom'
 import Header from '../Home/Header';
 import Footer from '../Home/Footer';
 import { Map as PigeonMap, Marker, ZoomControl } from 'pigeon-maps';

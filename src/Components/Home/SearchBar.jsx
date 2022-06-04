@@ -27,10 +27,24 @@ export default function SearchBar(props) {
         setInput('');
     }
 
+    const handleEnterPress = event => {
+        if (event.key !== 'Enter') return;
+        handleSearch();
+    }
+
     return (
 
         <div id='home-search' className="input-group mb-3 m-auto w-50 my-4">
-            <input type="text" style={searchInputStyles} className="form-control" placeholder={_DEFAULT_TEXT} aria-label="Search Bar" aria-describedby="search-button" onChange={e => setInput(e.target.value)} />
+            <input
+                type="text"
+                style={searchInputStyles}
+                className="form-control"
+                placeholder={_DEFAULT_TEXT}
+                aria-label="Search Bar"
+                aria-describedby="search-button"
+                onChange={e => setInput(e.target.value)}
+                onKeyDownCapture={handleEnterPress}
+            />
             <button style={searchBtnStyles} className="btn" type="button" id="search-button" onClick={handleSearch} >Search</button>
         </div>
 

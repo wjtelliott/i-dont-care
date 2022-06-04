@@ -11,7 +11,7 @@ export default function PopularSearches(props) {
         'Indian',
         'German',
         'Dessert',
-        'Itialian',
+        'Italian',
         'Mexican',
         'Seafood',
         'Sushi', // These should do for now in place of an actual search history

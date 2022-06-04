@@ -1,6 +1,8 @@
 import React from 'react';
 export default function FlexibleButton({handleFlex}) {
 
+    //TODO: We need to figure out if this button causes no results to be shown. If so, we need to redo the search
+
     const _BUTTON_TEXT = `I'm Flexible`
 
     const _RANDOM_SEARCHES = [
@@ -11,7 +13,7 @@ export default function FlexibleButton({handleFlex}) {
         'Indian',
         'German',
         'Dessert',
-        'Itialian',
+        'Italian',
         'Mexican',
         'Seafood',
         'Sushi', // These should do for now in place of an actual search history

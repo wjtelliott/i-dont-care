@@ -31,9 +31,9 @@ export default function ConfirmProfile({handleCancel}) {
                     </div>
                     <div className="form-row my-2">
                         <div className="form-group col-md-4 m-auto">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" name='rememberExclusions' id="flexCheckDefault" />
-                                <label class="form-check-label" for="flexCheckDefault">
+                            <div className="form-check">
+                                <input className="form-check-input" type="checkbox" value="" name='rememberExclusions' id="flexCheckDefault" />
+                                <label className="form-check-label" for="flexCheckDefault">
                                     Remember exclusions
                                 </label>
                             </div>

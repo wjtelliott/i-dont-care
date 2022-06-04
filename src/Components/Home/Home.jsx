@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import PopularSearches from './PopularSearches';
 import ResultsWindow from './ResultWindow';
 import SearchBar from './SearchBar';
